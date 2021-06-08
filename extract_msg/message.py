@@ -123,8 +123,11 @@ class Message(MessageBase):
             attachmentNames = []
             # Save the attachments
             for attachment in self.attachments:
-                attachmentNames.append(attachment.save(ContentId, toJson, useFileName, raw))#, html = html, rtf = rtf, allowFallback = allowFallback))
-
+                # attachmentNames.append(attachment.save(ContentId, toJson, useFileName, raw))#, html = html, rtf = rtf, allowFallback = allowFallback))
+                try:
+                    attachmentNames.append(attachment.save(ContentId, toJson, useFileName, raw))#, html = html, rtf = rtf, allowFallback = allowFallback))
+                catch NotImplementedError:
+                    print('fail to extract')
             # Save the message body
             fext = 'json' if toJson else 'txt'
 
