@@ -160,14 +160,14 @@ class MessageBase(MSGFile):
                         logger.exception(e)
                         self._attachments.append(UnsupportedAttachment(self, attachmentDir))
                     else:
-                        raise
+                        print('bad attachment!')
                 except Exception as e:
                     if self.attachmentErrorBehavior == constants.ATTACHMENT_ERROR_BROKEN:
                         logger.error('Error processing attachment at {}'.format(attachmentDir))
                         logger.exception(e)
                         self._attachments.append(BrokenAttachment(self, attachmentDir))
                     else:
-                        raise
+                        print('bad attachment!')
 
             self.__attachmentsReady = True
             try:
