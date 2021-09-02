@@ -162,7 +162,20 @@ class MSGFile(olefile.OleFileIO):
             return windowsUnicode(self._getStream(filename + '001F', prefix = False))
         else:
             tmp = self._getStream(filename + '001E', prefix = False)
-            return None if tmp is None else tmp.decode(self.stringEncoding)
+            if tmp is None:
+                returned = None
+            else:
+                try:
+                    returned = tmp.decode(self.stringEncoding)
+                except Exception as e:
+                    try:
+                        print(e)
+                        returned = tmp.decode("utf-8")
+                    except Exception as e:
+                        print(e)
+                        returned = tmp.decode("latin-1")
+            return returned
+
 
     def _getTypedData(self, id, _type = None, prefix = True):
         """
